@@ -1,0 +1,16 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:host {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: transparent;
+}
+
+.csl-container {
+  padding: 8px;
+}
