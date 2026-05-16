@@ -1,5 +1,13 @@
-import "./style.css";
+import { CrossServiceLink } from "./widget";
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-<pre>hello world!</pre>
-`;
+declare global {
+  interface Window {
+    CrossServiceLink: typeof CrossServiceLink;
+  }
+}
+
+if (typeof window !== "undefined") {
+  window.CrossServiceLink = CrossServiceLink;
+}
+
+export { CrossServiceLink };
