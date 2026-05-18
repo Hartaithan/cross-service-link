@@ -35,6 +35,7 @@
   --radius: 0.5rem;
   --shadow-color: color-mix(in oklab, var(--ring) 10%, transparent);
   --shadow: 0 1.5625rem 3.125rem -0.75rem var(var(--shadow-color));
+  --glow-color: color-mix(in oklab, var(--primary) 30%, transparent);
 }
 
 :host {
@@ -94,6 +95,11 @@ svg {
 }
 
 .csl-icon-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.csl-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,6 +109,15 @@ svg {
   border-radius: calc(var(--radius) - 0.125rem);
   background-color: color-mix(in oklab, var(--primary) 20%, transparent);
   color: var(--primary);
+}
+
+.csl-icon-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.5rem;
+  background-color: var(--glow-color);
+  filter: blur(8px);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .csl-icon-wrapper svg {
@@ -160,4 +175,14 @@ svg {
 
 .csl-never-show:hover {
   color: var(--foreground);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
