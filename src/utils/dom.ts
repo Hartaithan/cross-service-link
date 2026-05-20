@@ -5,3 +5,10 @@ export const resolveElement = (target?: string | HTMLElement): HTMLElement => {
   if (!element) throw new Error(`Target not found: ${target}`);
   return element as HTMLElement;
 };
+
+export const createTemplate = (html: string): HTMLElement => {
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  const element = template.content.firstElementChild!.cloneNode(true);
+  return element as HTMLElement;
+};

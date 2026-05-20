@@ -1,6 +1,6 @@
 import { Modal } from "../modal";
 import type { Options } from "../models/widget";
-import { resolveElement } from "../utils/dom";
+import { createTemplate, resolveElement } from "../utils/dom";
 import css from "./styles.css?inline";
 import html from "./template.html?raw";
 
@@ -38,9 +38,8 @@ export class CrossServiceLink {
     const styles = document.createElement("style");
     styles.textContent = css;
     this.root.appendChild(styles);
-    const template = document.createElement("template");
-    template.innerHTML = html;
-    this.root.appendChild(template.content.cloneNode(true));
+    const template = createTemplate(html);
+    this.root.appendChild(template);
     console.log("[cross-service-link]: render");
   }
 

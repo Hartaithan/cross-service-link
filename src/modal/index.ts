@@ -1,3 +1,4 @@
+import { createTemplate } from "../utils/dom";
 import css from "./styles.css?inline";
 import html from "./template.html?raw";
 
@@ -31,11 +32,8 @@ export class Modal {
     const styles = document.createElement("style");
     styles.textContent = css;
     this.root.appendChild(styles);
-    const template = document.createElement("template");
-    template.innerHTML = html;
-    this.container = template.content.firstElementChild!.cloneNode(
-      true,
-    ) as HTMLElement;
+    const template = createTemplate(html);
+    this.container = template;
     this.root.appendChild(this.container);
   }
 
