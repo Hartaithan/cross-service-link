@@ -1,6 +1,7 @@
 import { Modal } from "../modal";
 import type { Options } from "../models/widget";
 import { createTemplate, resolveElement } from "../utils/dom";
+import { storage } from "../utils/storage";
 import css from "./styles.css?inline";
 import html from "./template.html?raw";
 
@@ -18,6 +19,7 @@ export class CrossServiceLink {
 
   mount() {
     if (this.mounted) return;
+    if (storage.getNeverShow()) return;
     const target = resolveElement(this.options.target);
     this.host = document.createElement("div");
     this.host.id = "csl-host";
@@ -47,13 +49,23 @@ export class CrossServiceLink {
     this.modal.open();
   };
 
+  private handleNeverShowClick = () => {
+    this.destroy();
+    storage.setNeverShow(true);
+    console.log("[cross-service-link]: never show enabled");
+  };
+
   private attachEvents() {
     const view = this.root.getElementById("csl-view");
     view?.addEventListener("click", this.handleViewClick);
+    const neverShow = this.root.getElementById("csl-never-show");
+    neverShow?.addEventListener("click", this.handleNeverShowClick);
   }
 
   private detachEvents() {
     const view = this.root.getElementById("csl-view");
     view?.removeEventListener("click", this.handleViewClick);
+    const neverShow = this.root.getElementById("csl-never-show");
+    neverShow?.removeEventListener("click", this.handleNeverShowClick);
   }
 }

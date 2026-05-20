@@ -162,7 +162,7 @@ svg {
   color: var(--muted-foreground);
 }
 
-.csl-view {
+#csl-view {
   display: flex;
   align-items: center;
   gap: var(--spacing);
@@ -177,11 +177,11 @@ svg {
   transition: background-color 150ms ease;
 }
 
-.csl-view:hover {
+#csl-view:hover {
   background-color: var(--primary-hover);
 }
 
-.csl-never-show {
+#csl-never-show {
   width: 100%;
   margin-top: calc(var(--spacing) * 3);
   padding: 0;
@@ -191,7 +191,7 @@ svg {
   transition: color 150ms ease;
 }
 
-.csl-never-show:hover {
+#csl-never-show:hover {
   color: var(--foreground);
 }
 
