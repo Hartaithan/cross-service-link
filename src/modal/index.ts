@@ -1,3 +1,6 @@
+import EmblaCarousel from "embla-carousel";
+import { slides } from "../constants/slides";
+import { setupCarouselDots } from "../utils/carousel";
 import { createTemplate } from "../utils/dom";
 import css from "./styles.css?inline";
 import html from "./template.html?raw";
@@ -28,6 +31,41 @@ export class Modal {
     console.log("[modal]: closed");
   }
 
+  private renderSlides(container: HTMLElement) {
+    container.innerHTML = slides
+      .map(
+        (slide) => `<div class="csl-carousel-slide" data-slide-id="${slide.id}">
+        <img class="csl-carousel-slide-image" src="${slide.image_url}" alt="${slide.title}" />
+        <div class="csl-carousel-slide-content">
+          <h3 class="csl-carousel-slide-title">${slide.title}</h3>
+          <p class="csl-carousel-slide-description">${slide.description}</p>
+        </div>
+      </div>`,
+      )
+      .join("");
+  }
+
+  private initCarousel() {
+    const wrapper = this.container.querySelector<HTMLElement>(".csl-carousel");
+    if (!wrapper) return;
+    const viewport = wrapper.querySelector<HTMLElement>(
+      ".csl-carousel-viewport",
+    );
+    if (!viewport) return;
+    const container = viewport.querySelector<HTMLElement>(
+      ".csl-carousel-container",
+    );
+    if (!container) return;
+
+    this.renderSlides(container);
+
+    const embla = EmblaCarousel(viewport);
+
+    const dots =
+      this.container.querySelector<HTMLElement>(".csl-carousel-dots");
+    setupCarouselDots(embla, dots);
+  }
+
   private render() {
     const styles = document.createElement("style");
     styles.textContent = css;
@@ -35,6 +73,7 @@ export class Modal {
     const template = createTemplate(html);
     this.container = template;
     this.root.appendChild(this.container);
+    this.initCarousel();
   }
 
   private handleOverlayClick = (e: MouseEvent) => {
