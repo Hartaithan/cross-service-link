@@ -52,7 +52,7 @@
   --input: lab(9.52% -0.00000745058 0);
   --ring: lab(70.0236% -66.5129 18.6299);
   --shadow-color: color-mix(in oklab, var(--ring) 10%, transparent);
-  --shadow: 0 1.5625rem 3.125rem -0.75rem var(var(--shadow-color));
+  --shadow: 0 1.5625rem 3.125rem -0.75rem var(--shadow-color);
   --glow-color: color-mix(in oklab, var(--primary) 30%, transparent);
 }
 
