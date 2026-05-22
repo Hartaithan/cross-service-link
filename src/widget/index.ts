@@ -1,5 +1,6 @@
 import { Modal } from "../modal";
 import type { Options } from "../models/widget";
+import { delay } from "../utils/async";
 import { createTemplate, resolveElement } from "../utils/dom";
 import { storage } from "../utils/storage";
 import css from "./styles.css?inline";
@@ -11,15 +12,18 @@ export class CrossServiceLink {
   private root!: ShadowRoot;
   private modal!: Modal;
   private mounted = false;
+  private aborted = false;
 
   constructor(options: Options) {
     this.options = options;
     console.log("[cross-service-link]: initialized");
   }
 
-  mount() {
+  async mount() {
     if (this.mounted) return;
     if (storage.getNeverShow()) return;
+    await delay(1500);
+    if (this.aborted) return;
     const target = resolveElement(this.options.target);
     this.host = document.createElement("div");
     this.host.id = "csl-host";
@@ -32,8 +36,11 @@ export class CrossServiceLink {
   }
 
   destroy() {
+    this.aborted = true;
+    if (!this.mounted) return;
     this.detachEvents();
     this.host.remove();
+    this.mounted = false;
   }
 
   private render() {
