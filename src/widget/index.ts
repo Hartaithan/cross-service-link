@@ -19,11 +19,14 @@ export class CrossServiceLink {
     console.log("[cross-service-link]: initialized");
   }
 
-  async mount() {
+  async mount(onMounted?: () => void) {
     if (this.mounted) return;
     if (storage.getNeverShow()) return;
+    this.aborted = false;
     await delay(1500);
     if (this.aborted) return;
+    if (this.mounted) return;
+    if (storage.getNeverShow()) return;
     const target = resolveElement(this.options.target);
     this.host = document.createElement("div");
     this.host.id = "csl-host";
@@ -33,6 +36,8 @@ export class CrossServiceLink {
     this.render();
     this.attachEvents();
     this.mounted = true;
+    onMounted?.();
+    console.log("[cross-service-link]: mounted");
   }
 
   destroy() {
@@ -41,6 +46,7 @@ export class CrossServiceLink {
     this.detachEvents();
     this.host.remove();
     this.mounted = false;
+    console.log("[cross-service-link]: destroyed");
   }
 
   private render() {
@@ -57,8 +63,8 @@ export class CrossServiceLink {
   };
 
   private handleNeverShowClick = () => {
-    this.destroy();
     storage.setNeverShow(true);
+    this.destroy();
     console.log("[cross-service-link]: never show enabled");
   };
 
