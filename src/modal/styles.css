@@ -51,7 +51,7 @@
 .csl-carousel {
   width: 100%;
   margin: auto;
-  --slide-height: 19rem;
+  --slide-height: 16rem;
   --slide-spacing: 1rem;
   --slide-size: 100%;
 }
@@ -79,7 +79,8 @@
   min-height: var(--slide-height);
   object-fit: cover;
   border-radius: var(--radius);
-  background-color: var(--muted);
+  background-color: var(--image-background);
+  object-fit: contain;
 }
 
 .csl-carousel-slide-content {
@@ -100,6 +101,11 @@
   font-size: var(--text-sm);
   line-height: var(--tw-leading, var(--text-sm--line-height));
   color: var(--muted-foreground);
+}
+
+.csl-carousel-slide-link {
+  text-decoration: none;
+  margin-top: calc(var(--spacing) * 3);
 }
 
 .csl-carousel-dots {

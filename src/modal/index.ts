@@ -1,5 +1,5 @@
 import EmblaCarousel from "embla-carousel";
-import { slides } from "../constants/slides";
+import { items } from "../constants/items";
 import { setupCarouselDots } from "../utils/carousel";
 import { createTemplate } from "../utils/dom";
 import css from "./styles.css?inline";
@@ -32,13 +32,16 @@ export class Modal {
   }
 
   private renderSlides(container: HTMLElement) {
-    container.innerHTML = slides
+    container.innerHTML = items
       .map(
-        (slide) => `<div class="csl-carousel-slide" data-slide-id="${slide.id}">
-        <img class="csl-carousel-slide-image" src="${slide.image_url}" alt="${slide.title}" />
+        (
+          item,
+        ) => `<div class="csl-carousel-slide" data-slide-id="${item.id}" style="--image-background: ${item.image_background};">
+        <img class="csl-carousel-slide-image" src="${item.image_url}" alt="${item.title}" />
         <div class="csl-carousel-slide-content">
-          <h3 class="csl-carousel-slide-title">${slide.title}</h3>
-          <p class="csl-carousel-slide-description">${slide.description}</p>
+          <h3 class="csl-carousel-slide-title">${item.title}</h3>
+          <p class="csl-carousel-slide-description">${item.description}</p>
+          <a class="csl-primary-button csl-carousel-slide-link" href="${item.link}">Try it now!</a>
         </div>
       </div>`,
       )
