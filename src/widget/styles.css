@@ -162,12 +162,11 @@ svg {
   color: var(--muted-foreground);
 }
 
-#csl-view {
+.csl-primary-button {
   display: flex;
   align-items: center;
   gap: var(--spacing);
   width: 100%;
-  margin-top: calc(var(--spacing) * 4);
   padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
   border-radius: calc(var(--radius) - var(--spacing) / 2);
   background-color: var(--primary);
@@ -177,8 +176,12 @@ svg {
   transition: background-color 150ms ease;
 }
 
-#csl-view:hover {
+.csl-primary-button:hover {
   background-color: var(--primary-hover);
+}
+
+#csl-view {
+  margin-top: calc(var(--spacing) * 4);
 }
 
 #csl-never-show {
