@@ -1,5 +1,6 @@
 import { Modal } from "../modal";
 import type { Options } from "../models/widget";
+import { animateExit } from "../utils/animation";
 import { delay } from "../utils/async";
 import { createTemplate, resolveElement } from "../utils/dom";
 import { storage } from "../utils/storage";
@@ -40,10 +41,11 @@ export class CrossServiceLink {
     console.log("[cross-service-link]: mounted");
   }
 
-  destroy() {
+  async destroy() {
     this.aborted = true;
     if (!this.mounted) return;
     this.detachEvents();
+    await animateExit(this.host, "csl-widget-exit");
     this.host.remove();
     this.mounted = false;
     console.log("[cross-service-link]: destroyed");

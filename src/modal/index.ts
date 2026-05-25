@@ -1,5 +1,6 @@
 import EmblaCarousel from "embla-carousel";
 import { items } from "../constants/items";
+import { animateExit } from "../utils/animation";
 import { setupCarouselDots } from "../utils/carousel";
 import { createTemplate } from "../utils/dom";
 import css from "./styles.css?inline";
@@ -23,9 +24,10 @@ export class Modal {
     console.log("[modal]: opened");
   }
 
-  close() {
+  async close() {
     if (!this.mounted) return;
     this.detachEvents();
+    await animateExit(this.container, "csl-modal-exit");
     this.container.remove();
     this.mounted = false;
     console.log("[modal]: closed");

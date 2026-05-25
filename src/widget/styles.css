@@ -69,6 +69,11 @@
   color: var(--card-foreground);
   box-shadow: var(--shadow);
   font-family: Arial, Helvetica, sans-serif;
+  animation: slide-in 300ms ease-out;
+}
+
+:host(.csl-widget-exit) {
+  animation: slide-out 200ms ease-in forwards;
 }
 
 button {
@@ -205,5 +210,27 @@ svg {
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(1rem);
   }
 }

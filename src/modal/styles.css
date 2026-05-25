@@ -6,7 +6,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fade-in 150ms ease;
+  animation: fade-in 200ms ease;
+}
+
+.csl-modal-overlay.csl-modal-exit {
+  animation: fade-out 150ms ease forwards;
 }
 
 .csl-modal {
@@ -16,11 +20,15 @@
   border-radius: var(--radius);
   background-color: var(--card);
   color: var(--card-foreground);
-  animation: scale-in 150ms ease;
+  animation: scale-in 200ms ease;
   padding: calc(var(--spacing) * 6);
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 4);
+}
+
+.csl-modal-exit .csl-modal {
+  animation: scale-out 150ms ease forwards;
 }
 
 .csl-modal-header {
@@ -190,13 +198,33 @@
   }
 }
 
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes scale-in {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: translateY(1rem);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(1rem);
   }
 }
