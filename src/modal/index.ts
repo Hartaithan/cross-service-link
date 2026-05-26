@@ -34,7 +34,9 @@ export class Modal {
   }
 
   private renderSlides(container: HTMLElement) {
+    const origin = window.location.origin;
     container.innerHTML = items
+      .filter((item) => item.link !== origin)
       .map(
         (
           item,
