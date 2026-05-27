@@ -64,6 +64,10 @@ export class CrossServiceLink {
     this.modal.open();
   };
 
+  private handleCloseClick = () => {
+    this.modal.close();
+  };
+
   private handleNeverShowClick = () => {
     storage.setNeverShow(true);
     this.destroy();
@@ -73,6 +77,8 @@ export class CrossServiceLink {
   private attachEvents() {
     const view = this.root.getElementById("csl-view");
     view?.addEventListener("click", this.handleViewClick);
+    const close = this.root.getElementById("csl-close");
+    close?.addEventListener("click", this.handleCloseClick);
     const neverShow = this.root.getElementById("csl-never-show");
     neverShow?.addEventListener("click", this.handleNeverShowClick);
   }
@@ -80,6 +86,8 @@ export class CrossServiceLink {
   private detachEvents() {
     const view = this.root.getElementById("csl-view");
     view?.removeEventListener("click", this.handleViewClick);
+    const close = this.root.getElementById("csl-close");
+    close?.removeEventListener("click", this.handleCloseClick);
     const neverShow = this.root.getElementById("csl-never-show");
     neverShow?.removeEventListener("click", this.handleNeverShowClick);
   }

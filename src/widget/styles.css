@@ -100,6 +100,7 @@ svg {
   width: var(--close-size);
   height: var(--close-size);
   color: var(--muted-foreground);
+  z-index: 60;
 }
 
 .csl-close:hover {
