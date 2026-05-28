@@ -65,7 +65,7 @@ export class CrossServiceLink {
   };
 
   private handleCloseClick = () => {
-    this.modal.close();
+    this.destroy();
   };
 
   private handleNeverShowClick = () => {
@@ -78,6 +78,7 @@ export class CrossServiceLink {
     const view = this.root.getElementById("csl-view");
     view?.addEventListener("click", this.handleViewClick);
     const close = this.root.getElementById("csl-close");
+    console.log("close", close);
     close?.addEventListener("click", this.handleCloseClick);
     const neverShow = this.root.getElementById("csl-never-show");
     neverShow?.addEventListener("click", this.handleNeverShowClick);
