@@ -89,11 +89,11 @@ export class CrossServiceLink {
   private handleItemClick = (e: Event) => {
     const target = e.currentTarget as HTMLElement;
     const index = parseInt(target.dataset.index || "0", 10);
-    this.modal.open(index, () => this.destroy());
+    this.modal.open(index);
   };
 
   private handleViewClick = () => {
-    this.modal.open(0, () => this.destroy());
+    this.modal.open(0);
   };
 
   private handleCloseClick = () => {

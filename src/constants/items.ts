@@ -4,6 +4,7 @@ export const items: Item[] = [
   {
     id: "platinum-calendar",
     title: "Platinum Calendar",
+    short_title: "Platinum Calendar",
     description:
       "Visualize your progress by generating a custom calendar that displays the exact days you earned your platinum trophies throughout the year",
     link: "https://platinum-calendar.vercel.app",
@@ -13,8 +14,9 @@ export const items: Item[] = [
   {
     id: "a-z-platinum",
     title: "A-Z Platinum Challenge",
+    short_title: "A-Z Challenge",
     description:
-      "Track your journey to earn platinum trophies for games starting with every letter from A to Z. Organize completed titles, monitor missing letters, discover new challenges, and showcase your overall progress through a clean and engaging interface built for dedicated trophy hunters.",
+      "Track your journey to earn platinum trophies for games from A to Z. Organize completed titles, track missing letters, and showcase your progress in a clean, engaging interface built for trophy hunters.",
     link: "https://a-z-platinum.vercel.app",
     image_url: "/items/a-z-platinum.webp",
     image_background: "#FFFFFF",
@@ -22,6 +24,7 @@ export const items: Item[] = [
   {
     id: "profile-percentage",
     title: "Profile Completion Calculator",
+    short_title: "Profile Completion",
     description:
       "Calculate your PlayStation profile completion percentage, track your trophy progress, estimate future achievements, and preview trophy unlocks to plan your path toward the maximum possible completion rate",
     link: "https://profile-percentage.vercel.app",

@@ -20,11 +20,11 @@
   border-radius: var(--radius);
   background-color: var(--card);
   color: var(--card-foreground);
+  overflow: hidden;
   animation: scale-in 200ms ease;
-  padding: calc(var(--spacing) * 6);
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--spacing) * 4);
+  --slide-height: 12rem;
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
 }
 
 .csl-modal-exit .csl-modal {
@@ -32,36 +32,79 @@
 }
 
 .csl-modal-header {
+  position: relative;
+  padding: calc(var(--spacing) * 5);
+  border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing) * 2);
 }
 
-.csl-modal-header-title {
+.csl-modal-title {
   font-weight: 600;
   line-height: 1;
   font-size: var(--text-lg);
   color: var(--foreground);
 }
 
-.csl-modal-header-description {
+.csl-modal-description {
   font-size: var(--text-sm);
   line-height: var(--tw-leading, var(--text-sm--line-height));
   color: var(--muted-foreground);
+  margin-top: var(--spacing);
 }
 
-.csl-modal-content {
-  flex-direction: column;
-  gap: calc(var(--spacing) * 3);
+.csl-modal-close {
+  position: absolute;
+  top: calc(var(--spacing) * 4);
+  right: calc(var(--spacing) * 4);
+  background: none;
+  border: none;
+  color: var(--muted-foreground);
   display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.csl-modal-close:hover {
+  color: var(--foreground);
+}
+
+.csl-modal-slider {
+  position: relative;
+}
+
+.csl-modal-arrow {
+  position: absolute;
+  top: calc(50% - (calc(var(--slide-height) / 2)));
+  transform: translateY(-50%);
+  z-index: 5;
+  width: calc(var(--spacing) * 8);
+  height: calc(var(--spacing) * 8);
+  border-radius: 50%;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.csl-modal-arrow:hover {
+  background-color: var(--secondary);
+}
+
+.csl-modal-arrow-left {
+  left: calc(var(--spacing) * 3);
+}
+
+.csl-modal-arrow-right {
+  right: calc(var(--spacing) * 3);
 }
 
 .csl-carousel {
   width: 100%;
   margin: auto;
-  --slide-height: 16rem;
-  --slide-spacing: 1rem;
-  --slide-size: 100%;
 }
 
 .csl-carousel-viewport {
@@ -79,14 +122,14 @@
   flex: 0 0 var(--slide-size);
   min-width: 0;
   padding-left: var(--slide-spacing);
+  display: flex;
+  flex-direction: column;
 }
 
 .csl-carousel-slide-image {
   width: 100%;
   height: var(--slide-height);
   min-height: var(--slide-height);
-  object-fit: cover;
-  border-radius: var(--radius);
   background-color: var(--image-background);
   object-fit: contain;
 }
@@ -94,99 +137,101 @@
 .csl-carousel-slide-content {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing) * 1);
-  margin-top: calc(var(--spacing) * 3);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-grow: 1;
+  padding: calc(var(--spacing) * 5);
 }
 
 .csl-carousel-slide-title {
-  font-weight: 600;
   font-size: var(--text-base);
-  line-height: 1;
+  line-height: var(--tw-leading, var(--text-base--line-height));
+  font-weight: 600;
   color: var(--foreground);
+  margin-bottom: var(--spacing);
+}
+
+.csl-carousel-slide-category {
+  font-size: var(--text-xs);
+  line-height: var(--tw-leading, var(--text-xs--line-height));
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: calc(var(--spacing) * 4);
 }
 
 .csl-carousel-slide-description {
   font-size: var(--text-sm);
   line-height: var(--tw-leading, var(--text-sm--line-height));
   color: var(--muted-foreground);
+  margin: 0 0 calc(var(--spacing) * 4);
 }
 
 .csl-carousel-slide-link {
-  text-decoration: none;
-  margin-top: calc(var(--spacing) * 3);
-}
-
-.csl-carousel-dots {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  margin-top: calc(var(--spacing) * 2);
-}
-
-.csl-carousel-dot {
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: transparent;
-  touch-action: manipulation;
   display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 5);
+  border-radius: calc(var(--radius) - 0.0625rem);
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
+  font-weight: 600;
   text-decoration: none;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-  width: 1.25rem;
-  height: 1.25rem;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  position: relative;
-  transition: width 0.35s ease;
+  transition: background-color 150ms ease;
 }
 
-.csl-carousel-dot:before,
-.csl-carousel-dot:after {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 1rem;
-  position: absolute;
+.csl-carousel-slide-link:hover {
+  background-color: var(--primary-hover);
+}
+
+.csl-modal-tabs {
   display: flex;
+  gap: 5px;
+  padding: calc(var(--spacing) * 5);
+  border-top: 1px solid var(--border);
+}
+
+.csl-modal-tab {
+  flex: 1;
+  padding: calc(var(--spacing) * 2) calc(var(--spacing));
+  border-radius: calc(var(--radius) - 0.0625rem);
+  border: 1px solid var(--border);
+  background: transparent;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  content: "";
-  transition:
-    width 0.35s ease,
-    height 0.35s ease,
-    opacity 0.25s ease,
-    background-color 0.25s ease;
+  transition: all 0.22s;
 }
 
-.csl-carousel-dot:before {
-  background-color: var(--muted-foreground);
+.csl-modal-tab:hover {
+  background-color: var(--secondary);
 }
 
-.csl-carousel-dot:after {
-  background-color: var(--primary);
-  opacity: 0;
+.csl-modal-tab--active {
+  border-color: var(--accent);
+  background-color: color-mix(in oklab, var(--accent) 15%, transparent);
 }
 
-.csl-carousel-dot--selected {
-  width: 2.25rem;
+.csl-modal-tab-icon {
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 5);
+  object-fit: contain;
 }
 
-.csl-carousel-dot--selected:before {
-  width: 1.75rem;
-  height: 0.5rem;
-  opacity: 0.2;
+.csl-modal-tab-name {
+  font-size: var(--text-xs);
+  line-height: var(--tw-leading, var(--text-xs--line-height));
+  font-weight: 600;
+  color: var(--muted-foreground);
 }
 
-.csl-carousel-dot--selected:after {
-  opacity: 1;
-  width: 1.75rem;
-  height: 0.5rem;
-}
-
-.csl-carousel-dot:hover:not(.csl-carousel-dot--selected):before {
-  background-color: var(--primary);
-  opacity: 0.6;
+.csl-modal-tab--active .csl-modal-tab-name {
+  color: var(--accent);
 }
 
 @keyframes fade-in {

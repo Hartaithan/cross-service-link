@@ -1,36 +1,16 @@
 import type { EmblaCarouselType } from "embla-carousel";
 
-export const setupCarouselDots = (
+export const setupCarouselControls = (
   embla: EmblaCarouselType,
-  dotsNode: HTMLElement | null,
+  prev: HTMLElement | null,
+  next: HTMLElement | null,
 ): void => {
-  if (!dotsNode) return;
-
-  let nodes: HTMLElement[] = [];
-
-  const attachEvents = (): void => {
-    dotsNode.innerHTML = embla
-      .scrollSnapList()
-      .map(() => '<button class="csl-carousel-dot" type="button"></button>')
-      .join("");
-    nodes = Array.from(dotsNode.querySelectorAll(".csl-carousel-dot"));
-    nodes.forEach((dotNode, index) => {
-      dotNode.addEventListener("click", () => embla.scrollTo(index), false);
-    });
+  const scrollPrev = (): void => {
+    embla.scrollPrev();
   };
-
-  const toggleActive = (): void => {
-    const previous = embla.previousScrollSnap();
-    const selected = embla.selectedScrollSnap();
-    nodes[previous].classList.remove("csl-carousel-dot--selected");
-    nodes[selected].classList.add("csl-carousel-dot--selected");
+  const scrollNext = (): void => {
+    embla.scrollNext();
   };
-
-  attachEvents();
-  toggleActive();
-
-  embla
-    .on("reInit", attachEvents)
-    .on("reInit", toggleActive)
-    .on("select", toggleActive);
+  prev?.addEventListener("click", scrollPrev, false);
+  next?.addEventListener("click", scrollNext, false);
 };

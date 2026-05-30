@@ -1,18 +1,72 @@
 <div class="csl-modal-overlay">
   <div class="csl-modal">
     <div class="csl-modal-header">
-      <h2 class="csl-modal-header-title">If You Like This…</h2>
-      <p class="csl-modal-header-description">
+      <h2 class="csl-modal-title">If you like this...</h2>
+      <p class="csl-modal-description">
         Here are a few more that might catch your eye
       </p>
+      <button id="csl-modal-close" class="csl-modal-close" aria-label="Close">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
     </div>
-    <div class="csl-modal-content">
+    <div class="csl-modal-slider">
+      <button
+        id="csl-modal-prev"
+        class="csl-modal-arrow csl-modal-arrow-left"
+        aria-label="Prev"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+      </button>
+      <button
+        id="csl-modal-next"
+        class="csl-modal-arrow csl-modal-arrow-right"
+        aria-label="Next"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+      </button>
       <div class="csl-carousel">
         <div class="csl-carousel-viewport">
           <div class="csl-carousel-container"></div>
         </div>
-        <div class="csl-carousel-dots"></div>
       </div>
     </div>
+    <div id="csl-modal-tabs" class="csl-modal-tabs"></div>
   </div>
 </div>
