@@ -34,7 +34,7 @@ export class CrossServiceLink {
     this.host.id = "csl-host";
     target.appendChild(this.host);
     this.root = this.host.attachShadow({ mode: "open" });
-    this.modal = new Modal(this.root);
+    this.modal = new Modal(this.root, this.options.events);
     this.render();
     this.attachEvents();
     this.mounted = true;
@@ -93,7 +93,8 @@ export class CrossServiceLink {
   };
 
   private handleViewClick = () => {
-    this.modal.open(0);
+    this.options.events?.onLearnMoreClick?.();
+    this.modal.open();
   };
 
   private handleCloseClick = () => {
@@ -101,6 +102,7 @@ export class CrossServiceLink {
   };
 
   private handleNeverShowClick = () => {
+    this.options.events?.onNeverShowClick?.();
     storage.setNeverShow(true);
     this.destroy();
     console.log("[cross-service-link]: never show enabled");

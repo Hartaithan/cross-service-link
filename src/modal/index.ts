@@ -1,6 +1,7 @@
 import type { EmblaCarouselType } from "embla-carousel";
 import EmblaCarousel from "embla-carousel";
 import { items } from "../constants/items";
+import type { WidgetEvents } from "../models/widget";
 import { animateExit } from "../utils/animation";
 import { setupCarouselControls } from "../utils/carousel";
 import { createTemplate } from "../utils/dom";
@@ -13,9 +14,11 @@ export class Modal {
   private mounted = false;
   private embla: EmblaCarouselType | null = null;
   private filteredItems: typeof items = [];
+  private events: WidgetEvents;
 
-  constructor(root: ShadowRoot) {
+  constructor(root: ShadowRoot, events: WidgetEvents = {}) {
     this.root = root;
+    this.events = events;
     console.log("[modal]: initialized");
   }
 
@@ -62,7 +65,7 @@ export class Modal {
           <div class="csl-carousel-slide-content">
             <h3 class="csl-carousel-slide-title">${item.title}</h3>
             <p class="csl-carousel-slide-description">${item.description}</p>
-            <a class="csl-carousel-slide-link" href="${item.link}">Visit ${item.title}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
+            <a class="csl-carousel-slide-link" href="${item.link}" target="_blank">Visit ${item.title}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
           </div>
         </div>`,
       )
@@ -149,14 +152,26 @@ export class Modal {
     this.close();
   };
 
+  private handleLinkClick = (event: MouseEvent) => {
+    if (!event?.target) return;
+    const target = (event.target as HTMLElement).closest<HTMLAnchorElement>(
+      ".csl-carousel-slide-link",
+    );
+    if (target && this.events?.onLinkClick) {
+      this.events.onLinkClick(target.href);
+    }
+  };
+
   private attachEvents() {
     this.container.addEventListener("click", this.handleOverlayClick);
+    this.container.addEventListener("click", this.handleLinkClick);
     const close = this.container.querySelector<HTMLElement>("#csl-modal-close");
     close?.addEventListener("click", this.handleCloseClick);
   }
 
   private detachEvents() {
     this.container.removeEventListener("click", this.handleOverlayClick);
+    this.container.removeEventListener("click", this.handleLinkClick);
     const close = this.container.querySelector<HTMLElement>("#csl-modal-close");
     close?.removeEventListener("click", this.handleCloseClick);
     const prev = this.container.querySelector<HTMLElement>("#csl-modal-prev");

@@ -6,7 +6,11 @@
     <title>Demo</title>
     <script type="module">
       import { CrossServiceLink } from "/src/main.ts";
-      const widget = new CrossServiceLink({ target: "#app" });
+      const onLinkClick = (link) => console.log("link clicked", link);
+      const onLearnMoreClick = () => console.log("learn more click");
+      const onNeverShowClick = () => console.log("never show click");
+      const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
+      const widget = new CrossServiceLink({ target: "#app", events });
       widget.mount();
     </script>
     <style>
