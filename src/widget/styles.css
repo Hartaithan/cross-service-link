@@ -53,7 +53,6 @@
   --ring: lab(70.0236% -66.5129 18.6299);
   --shadow-color: color-mix(in oklab, var(--ring) 10%, transparent);
   --shadow: 0 1.5625rem 3.125rem -0.75rem var(--shadow-color);
-  --glow-color: color-mix(in oklab, var(--primary) 30%, transparent);
 }
 
 :host {
@@ -101,12 +100,10 @@ svg {
 }
 
 .csl-widget-label {
-  font-size: var(--text-xs);
-  line-height: var(--tw-leading, var(--text-xs--line-height));
+  font-size: var(--text-sm);
+  line-height: var(--tw-leading, var(--text-sm--line-height));
   font-weight: 600;
   color: var(--primary);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
 }
 
 .csl-widget-close {
@@ -156,6 +153,9 @@ svg {
   line-height: var(--tw-leading, var(--text-sm--line-height));
   font-weight: 500;
   color: var(--foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .csl-widget-item-desc {
@@ -175,19 +175,20 @@ svg {
 .csl-widget-divider {
   height: 1px;
   background-color: var(--border);
-  margin: var(--spacing) calc(var(--spacing) * 4) calc(var(--spacing) * 2);
+  margin: calc(var(--spacing) * 3) calc(var(--spacing) * 4);
+  margin-top: 0;
 }
 
 .csl-widget-footer {
   padding: 0 calc(var(--spacing) * 4) calc(var(--spacing) * 3);
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing) * 2);
+  gap: var(--spacing);
 }
 
 .csl-widget-explore {
   width: 100%;
-  padding: calc(var(--spacing) * 3);
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
   border-radius: calc(var(--radius) - 0.0625rem);
   border: none;
   background-color: var(--primary);
