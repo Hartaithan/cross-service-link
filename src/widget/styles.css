@@ -39,20 +39,20 @@
   --card-foreground: lab(97.68% -0.0000298023 0.0000119209);
   --popover: lab(3.6999% 0 0);
   --popover-foreground: lab(97.68% -0.0000298023 0.0000119209);
-  --primary: lab(70.0236% -66.5129 18.6299);
-  --primary-foreground: lab(1.98454% 0 0);
+  --primary: lab(40% -40 12);
+  --primary-foreground: lab(97.68% -0.0000298023 0.0000119209);
   --primary-hover: color-mix(in oklab, var(--primary) 90%, black);
   --secondary: lab(9.52% -0.00000745058 0);
   --secondary-foreground: lab(97.68% -0.0000298023 0.0000119209);
   --muted: lab(9.52% -0.00000745058 0);
   --muted-foreground: lab(53.6% 0 0);
-  --accent: lab(70.0236% -66.5129 18.6299);
-  --accent-foreground: lab(1.98454% 0 0);
+  --accent: lab(50% -40 12);
+  --accent-foreground: lab(97.68% -0.0000298023 0.0000119209);
   --destructive: lab(48.4493% 77.4328 61.5452);
   --destructive-foreground: lab(97.68% -0.0000298023 0.0000119209);
   --border: lab(16.48% 0 0);
   --input: lab(9.52% -0.00000745058 0);
-  --ring: lab(70.0236% -66.5129 18.6299);
+  --ring: lab(40% -40 12);
   --shadow-color: color-mix(in oklab, var(--ring) 10%, transparent);
   --shadow: 0 1.5625rem 3.125rem -0.75rem var(--shadow-color);
 }
@@ -64,20 +64,20 @@
   --card-foreground: lab(13.064% -0.0000460744 0);
   --popover: lab(100% 0 0);
   --popover-foreground: lab(13.064% -0.0000460744 0);
-  --primary: lab(54.7637% -53.653 17.4747);
+  --primary: lab(35% -35 10);
   --primary-foreground: lab(100% 0 0);
   --primary-hover: color-mix(in oklab, var(--primary) 90%, black);
   --secondary: lab(96.5% 0 0);
   --secondary-foreground: lab(13.064% -0.0000460744 0);
   --muted: lab(96.5% 0 0);
   --muted-foreground: lab(45% 0 0);
-  --accent: lab(54.7637% -53.653 17.4747);
+  --accent: lab(35% -35 10);
   --accent-foreground: lab(100% 0 0);
   --destructive: lab(57.7% 51.6 24);
   --destructive-foreground: lab(100% 0 0);
   --border: lab(90% 0 0);
   --input: lab(96.5% 0 0);
-  --ring: lab(54.7637% -53.653 17.4747);
+  --ring: lab(35% -35 10);
   --shadow-color: color-mix(in oklab, var(--ring) 8%, transparent);
   --shadow: 0 1.5625rem 3.125rem -0.75rem var(--shadow-color);
 }
@@ -130,7 +130,7 @@ svg {
   font-size: var(--text-sm);
   line-height: var(--tw-leading, var(--text-sm--line-height));
   font-weight: 600;
-  color: var(--primary);
+  color: var(--accent);
 }
 
 .csl-widget-close {
