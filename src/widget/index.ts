@@ -32,6 +32,7 @@ export class CrossServiceLink {
     const target = resolveElement(this.options.target);
     this.host = document.createElement("div");
     this.host.id = "csl-host";
+    this.host.dataset.theme = this.options?.theme || "dark";
     target.appendChild(this.host);
     this.root = this.host.attachShadow({ mode: "open" });
     this.modal = new Modal(this.root, this.options.events);

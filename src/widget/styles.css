@@ -9,6 +9,8 @@
   --host-spacing-y: 1.5rem;
   --close-size: 1rem;
   --icon-size: 1rem;
+  --color-black: #000;
+  --color-white: #fff;
 }
 
 :host {
@@ -52,6 +54,31 @@
   --input: lab(9.52% -0.00000745058 0);
   --ring: lab(70.0236% -66.5129 18.6299);
   --shadow-color: color-mix(in oklab, var(--ring) 10%, transparent);
+  --shadow: 0 1.5625rem 3.125rem -0.75rem var(--shadow-color);
+}
+
+:host([data-theme="light"]) {
+  --background: lab(100% 0 0);
+  --foreground: lab(13.064% -0.0000460744 0);
+  --card: lab(100% 0 0);
+  --card-foreground: lab(13.064% -0.0000460744 0);
+  --popover: lab(100% 0 0);
+  --popover-foreground: lab(13.064% -0.0000460744 0);
+  --primary: lab(54.7637% -53.653 17.4747);
+  --primary-foreground: lab(100% 0 0);
+  --primary-hover: color-mix(in oklab, var(--primary) 90%, black);
+  --secondary: lab(96.5% 0 0);
+  --secondary-foreground: lab(13.064% -0.0000460744 0);
+  --muted: lab(96.5% 0 0);
+  --muted-foreground: lab(45% 0 0);
+  --accent: lab(54.7637% -53.653 17.4747);
+  --accent-foreground: lab(100% 0 0);
+  --destructive: lab(57.7% 51.6 24);
+  --destructive-foreground: lab(100% 0 0);
+  --border: lab(90% 0 0);
+  --input: lab(96.5% 0 0);
+  --ring: lab(54.7637% -53.653 17.4747);
+  --shadow-color: color-mix(in oklab, var(--ring) 8%, transparent);
   --shadow: 0 1.5625rem 3.125rem -0.75rem var(--shadow-color);
 }
 
