@@ -3,8 +3,9 @@ import { Modal } from "../modal";
 import type { Options } from "../models/widget";
 import { animateExit } from "../utils/animation";
 import { delay } from "../utils/async";
-import { createTemplate, resolveElement } from "../utils/dom";
+import { createTemplate, renderTemplate, resolveElement } from "../utils/dom";
 import { storage } from "../utils/storage";
+import item from "./item.html?raw";
 import css from "./styles.css?inline";
 import html from "./template.html?raw";
 
@@ -63,16 +64,12 @@ export class CrossServiceLink {
     if (!container) return;
     const filtered = this.getFilteredItems();
     container.innerHTML = filtered
-      .map(
-        (item, i) => `
-        <button class="csl-widget-item" data-index="${i}">
-          <div class="csl-widget-item-text">
-            <div class="csl-widget-item-title">${item.short_title}</div>
-            <div class="csl-widget-item-desc">${item.description}</div>
-          </div>
-          <svg class="csl-widget-item-arrow" xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </button>
-      `,
+      .map((i, index) =>
+        renderTemplate(item, {
+          index,
+          short_title: i.short_title,
+          description: i.description,
+        }),
       )
       .join("");
   }

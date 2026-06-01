@@ -15,9 +15,12 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/html-minifier-terser": "^7.0.2",
+    "@types/node": "^25.9.1",
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.6.0",
+    "html-minifier-terser": "^7.2.0",
     "prettier": "3.8.3",
     "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "~6.0.2",

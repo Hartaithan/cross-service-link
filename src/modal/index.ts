@@ -4,8 +4,10 @@ import { items } from "../constants/items";
 import type { WidgetEvents } from "../models/widget";
 import { animateExit } from "../utils/animation";
 import { setupCarouselControls } from "../utils/carousel";
-import { createTemplate } from "../utils/dom";
+import { createTemplate, renderTemplate } from "../utils/dom";
+import slide from "./slide.html?raw";
 import css from "./styles.css?inline";
+import tab from "./tab.html?raw";
 import html from "./template.html?raw";
 
 export class Modal {
@@ -57,17 +59,15 @@ export class Modal {
   private renderSlides(container: HTMLElement) {
     this.filteredItems = this.getFilteredItems();
     container.innerHTML = this.filteredItems
-      .map(
-        (
-          item,
-        ) => `<div class="csl-carousel-slide" data-slide-id="${item.id}" style="--image-background: ${item.image_background};">
-          <img class="csl-carousel-slide-image" src="${item.image_url}" alt="${item.title}" />
-          <div class="csl-carousel-slide-content">
-            <h3 class="csl-carousel-slide-title">${item.title}</h3>
-            <p class="csl-carousel-slide-description">${item.description}</p>
-            <a class="csl-carousel-slide-link" href="${item.link}" target="_blank">Visit ${item.title}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></a>
-          </div>
-        </div>`,
+      .map((item) =>
+        renderTemplate(slide, {
+          id: item.id,
+          image_background: item.image_background,
+          image_url: item.image_url,
+          title: item.title,
+          description: item.description,
+          link: item.link,
+        }),
       )
       .join("");
   }
@@ -76,13 +76,12 @@ export class Modal {
     const tabs = this.container.querySelector<HTMLElement>("#csl-modal-tabs");
     if (!tabs) return;
     tabs.innerHTML = this.filteredItems
-      .map(
-        (
-          item,
-          i,
-        ) => `<button class="csl-modal-tab${i === 0 ? " csl-modal-tab--active" : ""}" data-tab-index="${i}">
-          <div class="csl-modal-tab-name">${item.short_title}</div>
-        </button>`,
+      .map((item, i) =>
+        renderTemplate(tab, {
+          index: i,
+          short_title: item.short_title,
+          active: i === 0 ? " csl-modal-tab--active" : "",
+        }),
       )
       .join("");
   }

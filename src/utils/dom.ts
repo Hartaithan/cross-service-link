@@ -12,3 +12,13 @@ export const createTemplate = (html: string): HTMLElement => {
   const element = template.content.firstElementChild!.cloneNode(true);
   return element as HTMLElement;
 };
+
+export const renderTemplate = (
+  template: string,
+  data: Record<string, string | number>,
+): string => {
+  return template.replace(
+    /\{\{(\w+)\}\}/g,
+    (_, key) => String(data[key] ?? ""),
+  );
+};
