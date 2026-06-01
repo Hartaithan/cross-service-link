@@ -4,7 +4,7 @@ import { items } from "../constants/items";
 import type { WidgetEvents } from "../models/widget";
 import { animateExit } from "../utils/animation";
 import { setupCarouselControls } from "../utils/carousel";
-import { createTemplate, renderTemplate } from "../utils/dom";
+import { createTemplate, EventManager, renderTemplate } from "../utils/dom";
 import slide from "./slide.html?raw";
 import css from "./styles.css?inline";
 import tab from "./tab.html?raw";
@@ -17,6 +17,7 @@ export class Modal {
   private embla: EmblaCarouselType | null = null;
   private filteredItems: typeof items = [];
   private events: WidgetEvents;
+  private eventManager = new EventManager();
 
   constructor(root: ShadowRoot, events: WidgetEvents = {}) {
     this.root = root;
@@ -40,7 +41,7 @@ export class Modal {
 
   async close() {
     if (!this.mounted) return;
-    this.detachEvents();
+    this.eventManager.removeAll();
     if (this.embla) {
       this.embla.destroy();
       this.embla = null;
@@ -89,9 +90,10 @@ export class Modal {
   private updateTabs(index: number) {
     const tabs = this.container?.querySelectorAll(".csl-modal-tab");
     if (!tabs) return;
-    tabs.forEach((tab, i) => {
+    for (let i = 0; i < tabs.length; i++) {
+      const tab = tabs[i];
       tab.classList.toggle("csl-modal-tab--active", i === index);
-    });
+    }
   }
 
   private initCarousel() {
@@ -119,7 +121,7 @@ export class Modal {
     setupCarouselControls(this.embla, prev, next);
 
     const tabs = this.container.querySelector<HTMLElement>("#csl-modal-tabs");
-    tabs?.addEventListener("click", (e) => {
+    this.eventManager.add(tabs, "click", (e) => {
       const tab = (e.target as HTMLElement).closest<HTMLElement>(
         ".csl-modal-tab",
       );
@@ -141,7 +143,7 @@ export class Modal {
     this.initCarousel();
   }
 
-  private handleOverlayClick = (e: MouseEvent) => {
+  private handleOverlayClick = (e: Event) => {
     if (e.target === this.container) {
       this.close();
     }
@@ -151,7 +153,7 @@ export class Modal {
     this.close();
   };
 
-  private handleLinkClick = (event: MouseEvent) => {
+  private handleLinkClick = (event: Event) => {
     if (!event?.target) return;
     const target = (event.target as HTMLElement).closest<HTMLAnchorElement>(
       ".csl-carousel-slide-link",
@@ -162,20 +164,9 @@ export class Modal {
   };
 
   private attachEvents() {
-    this.container.addEventListener("click", this.handleOverlayClick);
-    this.container.addEventListener("click", this.handleLinkClick);
+    this.eventManager.add(this.container, "click", this.handleOverlayClick);
+    this.eventManager.add(this.container, "click", this.handleLinkClick);
     const close = this.container.querySelector<HTMLElement>("#csl-modal-close");
-    close?.addEventListener("click", this.handleCloseClick);
-  }
-
-  private detachEvents() {
-    this.container.removeEventListener("click", this.handleOverlayClick);
-    this.container.removeEventListener("click", this.handleLinkClick);
-    const close = this.container.querySelector<HTMLElement>("#csl-modal-close");
-    close?.removeEventListener("click", this.handleCloseClick);
-    const prev = this.container.querySelector<HTMLElement>("#csl-modal-prev");
-    prev?.removeEventListener("click", () => this.embla?.scrollPrev());
-    const next = this.container.querySelector<HTMLElement>("#csl-modal-next");
-    next?.removeEventListener("click", () => this.embla?.scrollNext());
+    this.eventManager.add(close, "click", this.handleCloseClick);
   }
 }

@@ -3,7 +3,12 @@ import { Modal } from "../modal";
 import type { Options } from "../models/widget";
 import { animateExit } from "../utils/animation";
 import { delay } from "../utils/async";
-import { createTemplate, renderTemplate, resolveElement } from "../utils/dom";
+import {
+  createTemplate,
+  EventManager,
+  renderTemplate,
+  resolveElement,
+} from "../utils/dom";
 import { storage } from "../utils/storage";
 import item from "./item.html?raw";
 import css from "./styles.css?inline";
@@ -16,6 +21,7 @@ export class CrossServiceLink {
   private modal!: Modal;
   private mounted = false;
   private aborted = false;
+  private eventManager = new EventManager();
 
   constructor(options: Options) {
     this.options = options;
@@ -47,7 +53,7 @@ export class CrossServiceLink {
   async destroy() {
     this.aborted = true;
     if (!this.mounted) return;
-    this.detachEvents();
+    this.eventManager.removeAll();
     await animateExit(this.host, "csl-widget-exit");
     this.host.remove();
     this.mounted = false;
@@ -108,27 +114,14 @@ export class CrossServiceLink {
 
   private attachEvents() {
     const items = this.root.querySelectorAll(".csl-widget-item");
-    items.forEach((item) => {
-      item.addEventListener("click", this.handleItemClick);
-    });
+    for (const item of items) {
+      this.eventManager.add(item as HTMLElement, "click", this.handleItemClick);
+    }
     const view = this.root.getElementById("csl-view");
-    view?.addEventListener("click", this.handleViewClick);
+    this.eventManager.add(view, "click", this.handleViewClick);
     const close = this.root.getElementById("csl-close");
-    close?.addEventListener("click", this.handleCloseClick);
+    this.eventManager.add(close, "click", this.handleCloseClick);
     const neverShow = this.root.getElementById("csl-never-show");
-    neverShow?.addEventListener("click", this.handleNeverShowClick);
-  }
-
-  private detachEvents() {
-    const items = this.root.querySelectorAll(".csl-widget-item");
-    items.forEach((item) => {
-      item.removeEventListener("click", this.handleItemClick);
-    });
-    const view = this.root.getElementById("csl-view");
-    view?.removeEventListener("click", this.handleViewClick);
-    const close = this.root.getElementById("csl-close");
-    close?.removeEventListener("click", this.handleCloseClick);
-    const neverShow = this.root.getElementById("csl-never-show");
-    neverShow?.removeEventListener("click", this.handleNeverShowClick);
+    this.eventManager.add(neverShow, "click", this.handleNeverShowClick);
   }
 }
