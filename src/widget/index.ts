@@ -53,8 +53,8 @@ export class CrossServiceLink {
   async destroy() {
     this.aborted = true;
     if (!this.mounted) return;
-    this.eventManager.removeAll();
     await animateExit(this.host, "csl-widget-exit");
+    this.eventManager.removeAll();
     this.host.remove();
     this.mounted = false;
     console.log("[cross-service-link]: destroyed");

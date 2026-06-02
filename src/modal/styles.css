@@ -6,11 +6,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fade-in 200ms ease;
+  animation: fade-in 300ms ease-out;
 }
 
 .csl-modal-overlay.csl-modal-exit {
-  animation: fade-out 150ms ease forwards;
+  animation: fade-out 300ms ease-in forwards;
 }
 
 .csl-modal {
@@ -21,14 +21,14 @@
   background-color: var(--card);
   color: var(--card-foreground);
   overflow: hidden;
-  animation: scale-in 200ms ease;
+  animation: scale-in 300ms ease-out;
   --slide-height: 12rem;
   --slide-spacing: 1rem;
   --slide-size: 100%;
 }
 
 .csl-modal-exit .csl-modal {
-  animation: scale-out 150ms ease forwards;
+  animation: scale-out 300ms ease-in forwards;
 }
 
 .csl-modal-header {

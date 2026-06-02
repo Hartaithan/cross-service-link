@@ -41,12 +41,12 @@ export class Modal {
 
   async close() {
     if (!this.mounted) return;
+    await animateExit(this.container, "csl-modal-exit");
     this.eventManager.removeAll();
     if (this.embla) {
       this.embla.destroy();
       this.embla = null;
     }
-    await animateExit(this.container, "csl-modal-exit");
     this.container.remove();
     this.mounted = false;
     console.log("[modal]: closed");
