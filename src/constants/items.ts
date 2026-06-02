@@ -1,6 +1,4 @@
-import type { Item } from "../models/item";
-
-export const items: Item[] = [
+export const items: CrossServiceLink.Item[] = [
   {
     id: "platinum-calendar",
     title: "Platinum Calendar",

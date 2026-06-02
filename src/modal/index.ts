@@ -1,7 +1,6 @@
 import type { EmblaCarouselType } from "embla-carousel";
 import EmblaCarousel from "embla-carousel";
 import { items } from "../constants/items";
-import type { WidgetEvents } from "../models/widget";
 import { animateExit } from "../utils/animation";
 import { setupCarouselControls } from "../utils/carousel";
 import { createTemplate, EventManager, renderTemplate } from "../utils/dom";
@@ -16,10 +15,10 @@ export class Modal {
   private mounted = false;
   private embla: EmblaCarouselType | null = null;
   private filteredItems: typeof items = [];
-  private events: WidgetEvents;
+  private events: CrossServiceLink.Events;
   private eventManager = new EventManager();
 
-  constructor(root: ShadowRoot, events: WidgetEvents = {}) {
+  constructor(root: ShadowRoot, events: CrossServiceLink.Events = {}) {
     this.root = root;
     this.events = events;
     console.log("[modal]: initialized");

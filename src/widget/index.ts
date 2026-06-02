@@ -1,6 +1,5 @@
 import { items } from "../constants/items";
 import { Modal } from "../modal";
-import type { Options } from "../models/widget";
 import { animateExit } from "../utils/animation";
 import { delay } from "../utils/async";
 import {
@@ -15,7 +14,7 @@ import css from "./styles.css?inline";
 import html from "./template.html?raw";
 
 export class CrossServiceLink {
-  private options: Options;
+  private options: CrossServiceLink.Options;
   private host!: HTMLElement;
   private root!: ShadowRoot;
   private modal!: Modal;
@@ -23,7 +22,7 @@ export class CrossServiceLink {
   private aborted = false;
   private eventManager = new EventManager();
 
-  constructor(options: Options) {
+  constructor(options: CrossServiceLink.Options) {
     this.options = options;
     console.log("[cross-service-link]: initialized");
   }
