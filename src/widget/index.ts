@@ -49,14 +49,15 @@ export class CrossServiceLink {
     console.log("[cross-service-link]: mounted");
   }
 
-  async destroy() {
+  async unmount() {
     this.aborted = true;
     if (!this.mounted) return;
     await animateExit(this.host, "csl-widget-exit");
     this.eventManager.removeAll();
+    this.modal.close();
     this.host.remove();
     this.mounted = false;
-    console.log("[cross-service-link]: destroyed");
+    console.log("[cross-service-link]: unmounted");
   }
 
   private getFilteredItems() {
@@ -101,13 +102,13 @@ export class CrossServiceLink {
   };
 
   private handleCloseClick = () => {
-    this.destroy();
+    this.unmount();
   };
 
   private handleNeverShowClick = () => {
     this.options.events?.onNeverShowClick?.();
     storage.setNeverShow(true);
-    this.destroy();
+    this.unmount();
     console.log("[cross-service-link]: never show enabled");
   };
 

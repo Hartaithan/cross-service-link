@@ -26,7 +26,7 @@ declare global {
 
     interface Instance {
       mount(onMounted?: () => void): Promise<void>;
-      destroy(): Promise<void>;
+      unmount(): Promise<void>;
     }
 
     interface Constructor {
