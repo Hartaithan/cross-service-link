@@ -13,7 +13,6 @@ const html: PluginOption = {
       removeEmptyAttributes: true,
       collapseWhitespace: true,
       removeComments: true,
-      minifyCSS: true,
       minifyJS: true,
     });
     return `export default ${JSON.stringify(minified)};`;
