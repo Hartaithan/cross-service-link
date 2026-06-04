@@ -10,13 +10,13 @@
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
-    <script type="module">
-      import { CrossServiceLink } from "/src/main.ts";
+    <script type="module" src="src/main.ts" defer></script>
+    <script type="module" defer>
       const onLinkClick = (link) => console.log("link clicked", link);
       const onLearnMoreClick = () => console.log("learn more click");
       const onNeverShowClick = () => console.log("never show click");
       const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
-      const widget = new CrossServiceLink({ target: "#app", events });
+      const widget = new window.CrossServiceLink({ target: "#app", events });
       widget.mount();
     </script>
     <style>
