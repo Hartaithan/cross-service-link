@@ -1,5 +1,5 @@
 import { minify } from "html-minifier-terser";
-import { defineConfig, PluginOption } from "vite";
+import { defineConfig, loadEnv, PluginOption } from "vite";
 
 const html: PluginOption = {
   name: "minify-html-raw",
@@ -19,13 +19,36 @@ const html: PluginOption = {
   },
 };
 
-export default defineConfig({
-  plugins: [html],
-  build: {
-    lib: {
-      entry: "src/main.ts",
-      name: "CrossServiceLink",
-      fileName: "init",
-    },
+const loader = (url: string): PluginOption => ({
+  name: "loader",
+  apply: "build",
+  generateBundle(_options, bundle) {
+    const entry = Object.values(bundle).find(
+      (chunk) => "isEntry" in chunk && chunk.isEntry === true,
+    );
+    if (!entry || entry.type !== "chunk") {
+      this.error("entry chunk not found");
+      return;
+    }
+    const src = `${url}/${entry.fileName}`;
+    const script = `(function(){var s=document.createElement('script');s.src='${src}';s.async=true;document.head.appendChild(s);})()`;
+    this.emitFile({ type: "asset", fileName: "loader.js", source: script });
   },
+});
+
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  return {
+    plugins: [html, loader(env.BASE_URL)],
+    build: {
+      lib: {
+        entry: "src/main.ts",
+        name: "CrossServiceLink",
+        formats: ["umd"],
+      },
+      rollupOptions: {
+        output: { entryFileNames: "widget.[hash].js" },
+      },
+    },
+  };
 });
