@@ -31,6 +31,7 @@ declare global {
 
     interface Constructor {
       new (options: Options): Instance;
+      ready: Promise<void>;
     }
   }
 

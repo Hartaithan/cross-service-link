@@ -1,4 +1,7 @@
-import { minify } from "html-minifier-terser";
+import { minify as minifyHTML } from "html-minifier-terser";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { minify as minifyJS } from "terser";
 import { defineConfig, loadEnv, PluginOption } from "vite";
 
 const html: PluginOption = {
@@ -8,7 +11,7 @@ const html: PluginOption = {
     const match = code.match(/^export default\s+(".*");?$/s);
     if (!match) return null;
     const html = JSON.parse(match[1]);
-    const minified = await minify(html, {
+    const minified = await minifyHTML(html, {
       removeRedundantAttributes: true,
       removeEmptyAttributes: true,
       collapseWhitespace: true,
@@ -22,7 +25,7 @@ const html: PluginOption = {
 const loader = (url: string): PluginOption => ({
   name: "loader",
   apply: "build",
-  generateBundle(_options, bundle) {
+  async generateBundle(_options, bundle) {
     const entry = Object.values(bundle).find(
       (chunk) => "isEntry" in chunk && chunk.isEntry === true,
     );
@@ -31,8 +34,18 @@ const loader = (url: string): PluginOption => ({
       return;
     }
     const src = `${url}/${entry.fileName}`;
-    const script = `(function(){var s=document.createElement('script');s.src='${src}';s.async=true;document.head.appendChild(s);})()`;
-    this.emitFile({ type: "asset", fileName: "loader.js", source: script });
+    const template = readFileSync(resolve("src/loader/index.js"), "utf8");
+    const code = template.replace("__CSL_SRC__", src);
+    const result = await minifyJS(code, { module: false });
+    if (!result || !result.code) {
+      this.error("failed to minify loader code");
+      return;
+    }
+    this.emitFile({
+      type: "asset",
+      fileName: "loader.js",
+      source: result.code,
+    });
   },
 });
 

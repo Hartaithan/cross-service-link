@@ -12,12 +12,15 @@
     />
     <script type="module" src="src/main.ts" defer></script>
     <script type="module" defer>
-      const onLinkClick = (link) => console.log("link clicked", link);
-      const onLearnMoreClick = () => console.log("learn more click");
-      const onNeverShowClick = () => console.log("never show click");
-      const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
-      const widget = new window.CrossServiceLink({ target: "#app", events });
-      widget.mount();
+      const events = {
+        onLinkClick: (link) => console.log("link clicked", link),
+        onLearnMoreClick: () => console.log("learn more click"),
+        onNeverShowClick: () => console.log("never show click"),
+      };
+      window.CrossServiceLink.ready.then(() => {
+        const widget = new window.CrossServiceLink({ target: "#app", events });
+        widget.mount();
+      });
     </script>
     <style>
       * {

@@ -14,6 +14,7 @@ import css from "./styles.css?inline";
 import html from "./template.html?raw";
 
 export class CrossServiceLink {
+  static ready: Promise<void> = Promise.resolve();
   private options: CrossServiceLink.Options;
   private host!: HTMLElement;
   private root!: ShadowRoot;
