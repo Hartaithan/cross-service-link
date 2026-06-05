@@ -3,26 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Demo</title>
+    <title>Development</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
-    <script type="module" src="loader.js" defer></script>
+    <script type="module" src="src/main.ts" defer></script>
     <script type="module" defer>
-      const events = {
-        onLinkClick: (link) => console.log("link clicked", link),
-        onLearnMoreClick: () => console.log("learn more click"),
-        onNeverShowClick: () => console.log("never show click"),
-      };
-      console.log("first", window.CrossServiceLink);
-      window.CrossServiceLink.ready.then(() => {
-        console.log("second", window.CrossServiceLink);
-        const widget = new window.CrossServiceLink({ target: "#app", events });
-        widget.mount();
-      });
+      const onLinkClick = (link) => console.log("link clicked", link);
+      const onLearnMoreClick = () => console.log("learn more click");
+      const onNeverShowClick = () => console.log("never show click");
+      const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
+      const widget = new window.CrossServiceLink({ target: "#app", events });
+      widget.mount();
     </script>
     <style>
       * {
@@ -47,6 +42,6 @@
     </style>
   </head>
   <body id="app">
-    <pre>demo-page</pre>
+    <pre>development-page</pre>
   </body>
 </html>

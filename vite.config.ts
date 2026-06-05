@@ -2,7 +2,7 @@ import { minify as minifyHTML } from "html-minifier-terser";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { minify as minifyJS } from "terser";
-import { defineConfig, loadEnv, PluginOption } from "vite";
+import { defineConfig, PluginOption } from "vite";
 
 const html: PluginOption = {
   name: "minify-html-raw",
@@ -22,7 +22,7 @@ const html: PluginOption = {
   },
 };
 
-const loader = (url: string): PluginOption => ({
+const loader: PluginOption = {
   name: "loader",
   apply: "build",
   async generateBundle(_options, bundle) {
@@ -33,7 +33,7 @@ const loader = (url: string): PluginOption => ({
       this.error("entry chunk not found");
       return;
     }
-    const src = `${url}/${entry.fileName}`;
+    const src = `./${entry.fileName}`;
     const template = readFileSync(resolve("src/loader/index.js"), "utf8");
     const code = template.replace("__CSL_SRC__", src);
     const result = await minifyJS(code, { module: false });
@@ -47,21 +47,28 @@ const loader = (url: string): PluginOption => ({
       source: result.code,
     });
   },
-});
+};
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), "");
-  return {
-    plugins: [html, loader(env.BASE_URL)],
-    build: {
-      lib: {
-        entry: "src/main.ts",
-        name: "CrossServiceLink",
-        formats: ["umd"],
-      },
-      rollupOptions: {
-        output: { entryFileNames: "widget.[hash].js" },
-      },
+const home: PluginOption = {
+  name: "home-page",
+  apply: "build",
+  generateBundle() {
+    const html = readFileSync("index.html", "utf-8");
+    this.emitFile({ type: "asset", fileName: "index.html", source: html });
+  },
+};
+
+export default defineConfig({
+  plugins: [html, home, loader],
+  server: { open: "/dev.html" },
+  build: {
+    lib: {
+      entry: "src/main.ts",
+      name: "CrossServiceLink",
+      formats: ["umd"],
     },
-  };
+    rollupOptions: {
+      output: { entryFileNames: "widget.[hash].js" },
+    },
+  },
 });
