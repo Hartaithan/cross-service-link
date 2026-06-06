@@ -4,7 +4,7 @@ export const storage = {
   getNeverShow(): boolean {
     try {
       const value = localStorage.getItem(STORAGE_KEY) === "true";
-      if (value) console.info("[cross-service-link]: never show");
+      if (value) console.info("[cross-service-link]: never show set");
       return value;
     } catch {
       return false;

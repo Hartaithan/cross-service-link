@@ -44,16 +44,14 @@ const loader: PluginOption = {
       (chunk) => "isEntry" in chunk && chunk.isEntry === true,
     );
     if (!entry || entry.type !== "chunk") {
-      this.error("entry chunk not found");
-      return;
+      return this.error("entry chunk not found");
     }
     const src = `./${entry.fileName}`;
     const template = readFileSync(resolve("src/loader/index.js"), "utf8");
     const code = template.replace("__CSL_SRC__", src);
     const result = await minifyJS(code, { module: false });
     if (!result || !result.code) {
-      this.error("failed to minify loader code");
-      return;
+      return this.error("failed to minify loader code");
     }
     this.emitFile({
       type: "asset",

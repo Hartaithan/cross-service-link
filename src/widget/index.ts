@@ -25,7 +25,7 @@ export class CrossServiceLink {
 
   constructor(options: CrossServiceLink.Options) {
     this.options = options;
-    console.log("[cross-service-link]: initialized");
+    console.log("[cross-service-link]: widget initialized");
   }
 
   async mount(onMounted?: () => void) {
@@ -47,7 +47,7 @@ export class CrossServiceLink {
     this.attachEvents();
     this.mounted = true;
     onMounted?.();
-    console.log("[cross-service-link]: mounted");
+    console.log("[cross-service-link]: widget mounted");
   }
 
   async unmount() {
@@ -58,7 +58,7 @@ export class CrossServiceLink {
     this.modal.close();
     this.host.remove();
     this.mounted = false;
-    console.log("[cross-service-link]: unmounted");
+    console.log("[cross-service-link]: widget unmounted");
   }
 
   private getFilteredItems() {
@@ -88,7 +88,7 @@ export class CrossServiceLink {
     const template = createTemplate(html);
     this.root.appendChild(template);
     this.renderItems();
-    console.log("[cross-service-link]: render");
+    console.log("[cross-service-link]: widget render");
   }
 
   private handleItemClick = (e: Event) => {
