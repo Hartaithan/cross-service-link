@@ -12,14 +12,11 @@
     />
     <script type="module" src="loader.js" defer></script>
     <script type="module" defer>
-      const events = {
-        onLinkClick: (link) => console.log("link clicked", link),
-        onLearnMoreClick: () => console.log("learn more click"),
-        onNeverShowClick: () => console.log("never show click"),
-      };
-      console.log("first", window.CrossServiceLink);
+      const onLinkClick = (link) => console.log("link clicked", link);
+      const onLearnMoreClick = () => console.log("learn more click");
+      const onNeverShowClick = () => console.log("never show click");
+      const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
       window.CrossServiceLink.ready.then(() => {
-        console.log("second", window.CrossServiceLink);
         const widget = new window.CrossServiceLink({ target: "#app", events });
         widget.mount();
       });

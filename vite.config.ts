@@ -22,8 +22,22 @@ const html: PluginOption = {
   },
 };
 
+const dev: PluginOption = {
+  name: "serve-dev-html-as-root",
+  apply: "serve",
+  configureServer(server) {
+    server.middlewares.use(async (req, res, next) => {
+      if (req.url !== "/") return next();
+      let html = readFileSync(resolve("dev.html"), "utf8");
+      html = await server.transformIndexHtml("/", html);
+      res.setHeader("Content-Type", "text/html");
+      res.end(html);
+    });
+  },
+};
+
 const loader: PluginOption = {
-  name: "loader",
+  name: "generate-loader",
   apply: "build",
   async generateBundle(_options, bundle) {
     const entry = Object.values(bundle).find(
@@ -49,18 +63,8 @@ const loader: PluginOption = {
   },
 };
 
-const home: PluginOption = {
-  name: "home-page",
-  apply: "build",
-  generateBundle() {
-    const html = readFileSync("index.html", "utf-8");
-    this.emitFile({ type: "asset", fileName: "index.html", source: html });
-  },
-};
-
 export default defineConfig({
-  plugins: [html, home, loader],
-  server: { open: "/dev.html" },
+  plugins: [html, dev, loader],
   build: {
     lib: {
       entry: "src/main.ts",
