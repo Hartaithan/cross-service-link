@@ -21,7 +21,7 @@ export class Modal {
   constructor(root: ShadowRoot, events: CrossServiceLink.Events = {}) {
     this.root = root;
     this.events = events;
-    console.log("[cross-service-link]: modal initialized");
+    console.info("[cross-service-link]: modal initialized");
   }
 
   open(initialIndex = 0) {
@@ -35,7 +35,7 @@ export class Modal {
         this.updateTabs(initialIndex);
       });
     }
-    console.log("[cross-service-link]: modal opened");
+    console.info("[cross-service-link]: modal opened");
   }
 
   async close() {
@@ -48,7 +48,7 @@ export class Modal {
     }
     this.container.remove();
     this.mounted = false;
-    console.log("[cross-service-link]: modal closed");
+    console.info("[cross-service-link]: modal closed");
   }
 
   private getFilteredItems() {

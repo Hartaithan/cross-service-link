@@ -12,16 +12,19 @@ A self-contained embeddable widget for cross-promoting trophy-related services. 
 ## Usage
 
 ```html
-<script type="module" src="https://your-cdn.example.com/loader.js"></script>
-<script type="module" defer>
-  const onLinkClick = (link) => console.log("link clicked", link);
-  const onLearnMoreClick = () => console.log("learn more click");
-  const onNeverShowClick = () => console.log("never show click");
-  const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
-  window.CrossServiceLink.ready.then(() => {
-    const options = { target: "#app", theme: "light", events };
-    const widget = new window.CrossServiceLink(options);
-    widget.mount();
-  });
+<script src="https://your-cdn.example.com/loader.js" defer></script>
+<script>
+  document.addEventListener(
+    "cross-service-link:ready",
+    () => {
+      const onLinkClick = (link) => console.log("link clicked", link);
+      const onLearnMoreClick = () => console.log("learn more click");
+      const onNeverShowClick = () => console.log("never show click");
+      const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
+      const widget = new window.CrossServiceLink({ target: "#app", events });
+      widget.mount();
+    },
+    { once: true },
+  );
 </script>
 ```

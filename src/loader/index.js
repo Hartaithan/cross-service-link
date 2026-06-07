@@ -1,23 +1,15 @@
 (function () {
-  var resolveReady;
-  var rejectReady;
-
-  var ready = new Promise(function (resolve, reject) {
-    resolveReady = resolve;
-    rejectReady = reject;
-  });
-
-  window.CrossServiceLink = { ready };
-
   var script = document.createElement("script");
 
   script.src = "__CSL_SRC__";
   script.async = true;
 
-  script.onload = resolveReady;
+  script.onload = function () {
+    document.dispatchEvent(new Event("cross-service-link:ready"));
+  };
 
   script.onerror = function () {
-    rejectReady(new Error("Failed to load CrossServiceLink widget"));
+    console.error("[cross-service-link]: failed to load widget");
   };
 
   document.head.appendChild(script);

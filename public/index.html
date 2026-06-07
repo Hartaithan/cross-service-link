@@ -10,16 +10,23 @@
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
-    <script type="module" src="loader.js" defer></script>
-    <script type="module" defer>
-      const onLinkClick = (link) => console.log("link clicked", link);
-      const onLearnMoreClick = () => console.log("learn more click");
-      const onNeverShowClick = () => console.log("never show click");
-      const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
-      window.CrossServiceLink.ready.then(() => {
-        const widget = new window.CrossServiceLink({ target: "#app", events });
-        widget.mount();
-      });
+    <script src="loader.js" defer></script>
+    <script>
+      document.addEventListener(
+        "cross-service-link:ready",
+        () => {
+          const onLinkClick = (link) => console.log("link clicked", link);
+          const onLearnMoreClick = () => console.log("learn more click");
+          const onNeverShowClick = () => console.log("never show click");
+          const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
+          const widget = new window.CrossServiceLink({
+            target: "#app",
+            events,
+          });
+          widget.mount();
+        },
+        { once: true },
+      );
     </script>
     <style>
       * {
@@ -103,17 +110,21 @@
         <h3>Usage</h3>
         <pre
           style="margin-top: 1rem"
-        ><code>&lt;<span>script</span> <span>type</span>=<span>"module"</span> <span>src</span>=<span>"loader.js"</span> <span>defer</span>&gt;&lt;/<span>script</span>&gt;
-&lt;<span>script</span> <span>type</span>=<span>"module"</span> <span>defer</span>&gt;
-  <span>const</span> <span>onLinkClick</span> = (link) =&gt; console.<span>log</span>(<span>"link clicked"</span>, link);
-  <span>const</span> <span>onLearnMoreClick</span> = () =&gt; console.<span>log</span>(<span>"learn more click"</span>);
-  <span>const</span> <span>onNeverShowClick</span> = () =&gt; console.<span>log</span>(<span>"never show click"</span>);
-  <span>const</span> <span>events</span> = { onLinkClick, onLearnMoreClick, onNeverShowClick };
-  <span>window</span>.CrossServiceLink.ready.<span>then</span>(() =&gt; {
-    <span>const</span> <span>widget</span> = <span>new</span> <span>window</span>.CrossServiceLink({ target: <span>"#app"</span>, events });
-    widget.<span>mount</span>();
-  });
-&lt;/<span>script</span>&gt;</code></pre>
+        ><code>&lt;script src="loader.js" defer&gt;&lt;/script&gt;
+&lt;script&gt;
+  document.addEventListener(
+    "cross-service-link:ready",
+    () =&gt; {
+      const onLinkClick = (link) =&gt; console.log("link clicked", link);
+      const onLearnMoreClick = () =&gt; console.log("learn more click");
+      const onNeverShowClick = () =&gt; console.log("never show click");
+      const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
+      const widget = new window.CrossServiceLink({ target: "#app", events });
+      widget.mount();
+    },
+    { once: true },
+  );
+&lt;/script&gt;</code></pre>
       </section>
     </main>
   </body>
