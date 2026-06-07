@@ -70,7 +70,7 @@ export default defineConfig({
       formats: ["umd"],
     },
     rollupOptions: {
-      output: { entryFileNames: "widget.[hash].js" },
+      output: { entryFileNames: "assets/widget.[hash].js" },
     },
   },
 });
