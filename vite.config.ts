@@ -2,7 +2,7 @@ import { minify as minifyHTML } from "html-minifier-terser";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { minify as minifyJS } from "terser";
-import { defineConfig, PluginOption } from "vite";
+import { defineConfig, loadEnv, PluginOption } from "vite";
 
 const html: PluginOption = {
   name: "minify-html-raw",
@@ -36,41 +36,46 @@ const dev: PluginOption = {
   },
 };
 
-const loader: PluginOption = {
-  name: "generate-loader",
-  apply: "build",
-  async generateBundle(_options, bundle) {
-    const entry = Object.values(bundle).find(
-      (chunk) => "isEntry" in chunk && chunk.isEntry === true,
-    );
-    if (!entry || entry.type !== "chunk") {
-      return this.error("entry chunk not found");
-    }
-    const src = `./${entry.fileName}`;
-    const template = readFileSync(resolve("src/loader/index.js"), "utf8");
-    const code = template.replace("__CSL_SRC__", src);
-    const result = await minifyJS(code, { module: false });
-    if (!result || !result.code) {
-      return this.error("failed to minify loader code");
-    }
-    this.emitFile({
-      type: "asset",
-      fileName: "loader.js",
-      source: result.code,
-    });
-  },
+const loader = (url: string): PluginOption => {
+  return {
+    name: "generate-loader",
+    apply: "build",
+    async generateBundle(_options, bundle) {
+      const entry = Object.values(bundle).find(
+        (chunk) => "isEntry" in chunk && chunk.isEntry === true,
+      );
+      if (!entry || entry.type !== "chunk") {
+        return this.error("entry chunk not found");
+      }
+      if (!url) return this.error("base url not found");
+      const template = readFileSync(resolve("src/loader/index.js"), "utf8");
+      const code = template.replace("__CSL_SRC__", `${url}/${entry.fileName}`);
+      const result = await minifyJS(code, { module: false });
+      if (!result || !result.code) {
+        return this.error("failed to minify loader code");
+      }
+      this.emitFile({
+        type: "asset",
+        fileName: "loader.js",
+        source: result.code,
+      });
+    },
+  };
 };
 
-export default defineConfig({
-  plugins: [html, dev, loader],
-  build: {
-    lib: {
-      entry: "src/main.ts",
-      name: "CrossServiceLink",
-      formats: ["umd"],
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  return {
+    plugins: [html, dev, loader(env.BASE_URL)],
+    build: {
+      lib: {
+        entry: "src/main.ts",
+        name: "CrossServiceLink",
+        formats: ["umd"],
+      },
+      rollupOptions: {
+        output: { entryFileNames: "assets/widget.[hash].js" },
+      },
     },
-    rollupOptions: {
-      output: { entryFileNames: "assets/widget.[hash].js" },
-    },
-  },
+  };
 });

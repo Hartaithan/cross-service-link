@@ -12,7 +12,7 @@ A self-contained embeddable widget for cross-promoting trophy-related services. 
 ## Usage
 
 ```html
-<script src="https://your-cdn.example.com/loader.js" defer></script>
+<script src="https://cross-service-link.vercel.app/loader.js" defer></script>
 <script>
   document.addEventListener(
     "cross-service-link:ready",
