@@ -14,7 +14,8 @@ import css from "./styles.css?inline";
 import html from "./template.html?raw";
 
 export class CrossServiceLink {
-  private options: CrossServiceLink.Options;
+  private static instance: CrossServiceLink | null = null;
+  private options!: CrossServiceLink.Options;
   private host!: HTMLElement;
   private root!: ShadowRoot;
   private modal!: Modal;
@@ -23,6 +24,8 @@ export class CrossServiceLink {
   private eventManager = new EventManager();
 
   constructor(options: CrossServiceLink.Options) {
+    if (CrossServiceLink.instance) return CrossServiceLink.instance;
+    CrossServiceLink.instance = this;
     this.options = options;
     console.info("[cross-service-link]: widget initialized");
   }
@@ -52,6 +55,7 @@ export class CrossServiceLink {
   async unmount() {
     this.aborted = true;
     if (!this.mounted) return;
+    if (CrossServiceLink.instance === this) CrossServiceLink.instance = null;
     await animateExit(this.host, "csl-widget-exit");
     this.eventManager.removeAll();
     this.modal.close();
