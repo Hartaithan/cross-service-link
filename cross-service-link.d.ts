@@ -16,7 +16,7 @@ declare global {
       onNeverShowClick?: () => void;
     }
 
-    type Theme = "dark" | "light";
+    type Theme = "dark" | "light" | "inherit";
 
     interface Options {
       target: string | HTMLElement;

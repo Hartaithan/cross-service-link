@@ -32,7 +32,7 @@
   --text-4xl--line-height: calc(2.5 / 2.25);
 }
 
-:host {
+:host([data-theme="dark"]) {
   --background: lab(1.98454% 0 0);
   --foreground: lab(97.68% -0.0000298023 0.0000119209);
   --card: lab(3.6999% 0 0);
