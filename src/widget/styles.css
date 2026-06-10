@@ -41,7 +41,6 @@
   --popover-foreground: lab(97.68% -0.0000298023 0.0000119209);
   --primary: lab(40% -40 12);
   --primary-foreground: lab(97.68% -0.0000298023 0.0000119209);
-  --primary-hover: color-mix(in oklab, var(--primary) 90%, black);
   --secondary: lab(9.52% -0.00000745058 0);
   --secondary-foreground: lab(97.68% -0.0000298023 0.0000119209);
   --muted: lab(9.52% -0.00000745058 0);
@@ -66,7 +65,6 @@
   --popover-foreground: lab(13.064% -0.0000460744 0);
   --primary: lab(35% -35 10);
   --primary-foreground: lab(100% 0 0);
-  --primary-hover: color-mix(in oklab, var(--primary) 90%, black);
   --secondary: lab(96.5% 0 0);
   --secondary-foreground: lab(13.064% -0.0000460744 0);
   --muted: lab(96.5% 0 0);
@@ -167,7 +165,13 @@ svg {
 }
 
 .csl-widget-item:hover {
-  background-color: var(--secondary);
+  background-color: color-mix(in oklab, var(--accent) 50%, black);
+}
+
+.csl-widget-item:hover .csl-widget-item-title,
+.csl-widget-item:hover .csl-widget-item-desc,
+.csl-widget-item:hover .csl-widget-item-arrow {
+  color: var(--foreground);
 }
 
 .csl-widget-item-text {
@@ -228,7 +232,7 @@ svg {
 }
 
 .csl-widget-explore:hover {
-  background-color: var(--primary-hover);
+  background-color: color-mix(in oklab, var(--primary) 90%, black);
 }
 
 .csl-widget-never {

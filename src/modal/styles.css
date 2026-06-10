@@ -91,7 +91,8 @@
 }
 
 .csl-modal-arrow:hover {
-  background-color: var(--secondary);
+  background-color: color-mix(in oklab, var(--accent) 80%, black);
+  color: var(--accent-foreground);
 }
 
 .csl-modal-arrow-left {
@@ -186,7 +187,7 @@
 }
 
 .csl-carousel-slide-link:hover {
-  background-color: var(--primary-hover);
+  background-color: color-mix(in oklab, var(--primary) 90%, black);
 }
 
 .csl-modal-tabs {
@@ -209,7 +210,7 @@
 }
 
 .csl-modal-tab:hover {
-  background-color: var(--secondary);
+  background-color: var(--muted);
 }
 
 .csl-modal-tab--active {
