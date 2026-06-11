@@ -251,6 +251,44 @@ svg {
   color: var(--foreground);
 }
 
+@media (max-width: 640px) {
+  :host {
+    width: calc(100% - 1rem);
+    right: 0.5rem;
+    top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    width: calc(100% - 1rem);
+    right: 0.5rem;
+    top: 0.5rem;
+  }
+
+  .csl-widget-header {
+    padding: calc(var(--spacing) * 3);
+  }
+
+  .csl-widget-items {
+    padding-inline: var(--spacing);
+  }
+
+  .csl-widget-item {
+    padding: calc(var(--spacing) * 2);
+    gap: calc(var(--spacing) * 2);
+  }
+
+  .csl-widget-footer {
+    padding: calc(var(--spacing) * 3);
+    padding-top: 0;
+  }
+
+  .csl-widget-divider {
+    margin-inline: calc(var(--spacing) * 3);
+  }
+}
+
 @keyframes slide-in {
   from {
     opacity: 0;
