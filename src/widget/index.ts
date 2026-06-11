@@ -22,6 +22,7 @@ export class CrossServiceLink {
   private mounted = false;
   private aborted = false;
   private eventManager = new EventManager();
+  private theme: CrossServiceLink.Theme = "dark";
 
   constructor(options: CrossServiceLink.Options) {
     if (CrossServiceLink.instance) return CrossServiceLink.instance;
@@ -41,8 +42,8 @@ export class CrossServiceLink {
     const target = resolveElement(this.options.target);
     this.host = document.createElement("div");
     this.host.id = "csl-host";
-    const theme = this.options?.theme || "dark";
-    if (theme !== "inherit") this.host.dataset.theme = theme;
+    this.theme = this.options?.theme || "dark";
+    if (this.theme !== "inherit") this.host.dataset.theme = this.theme;
     target.appendChild(this.host);
     this.root = this.host.attachShadow({ mode: "open" });
     this.modal = new Modal(this.root, this.options.events);
@@ -63,6 +64,12 @@ export class CrossServiceLink {
     this.host.remove();
     this.mounted = false;
     console.info("[cross-service-link]: widget unmounted");
+  }
+
+  setTheme(theme: CrossServiceLink.Theme) {
+    this.theme = theme;
+    if (theme !== "inherit") this.host.dataset.theme = theme;
+    else delete this.host.dataset.theme;
   }
 
   private getFilteredItems() {

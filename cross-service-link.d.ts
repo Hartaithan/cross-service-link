@@ -27,6 +27,7 @@ declare global {
     interface Instance {
       mount(onMounted?: () => void): Promise<void>;
       unmount(): Promise<void>;
+      setTheme(theme: Theme): void;
     }
 
     interface Constructor {
