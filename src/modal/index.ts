@@ -4,6 +4,7 @@ import { items } from "../constants/items";
 import { animateExit } from "../utils/animation";
 import { setupCarouselControls } from "../utils/carousel";
 import { createTemplate, EventManager, renderTemplate } from "../utils/dom";
+import { getImageURL } from "../utils/image";
 import slide from "./slide.html?raw";
 import css from "./styles.css?inline";
 import tab from "./tab.html?raw";
@@ -63,7 +64,7 @@ export class Modal {
         renderTemplate(slide, {
           id: item.id,
           image_background: item.image_background,
-          image_url: item.image_url,
+          image_url: getImageURL(item.image_url),
           title: item.title,
           description: item.description,
           link: item.link,

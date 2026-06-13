@@ -66,7 +66,7 @@ const loader = (url: string): PluginOption => {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
-    plugins: [html, dev, loader(env.BASE_URL)],
+    plugins: [html, dev, loader(env.VITE_BASE_URL)],
     build: {
       lib: {
         entry: "src/main.ts",
