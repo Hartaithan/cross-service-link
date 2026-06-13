@@ -14,6 +14,7 @@ declare global {
       onLinkClick?: (link: string) => void;
       onLearnMoreClick?: () => void;
       onNeverShowClick?: () => void;
+      onCloseClick?: () => void;
     }
 
     type Theme = "dark" | "light" | "inherit";

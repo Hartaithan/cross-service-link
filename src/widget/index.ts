@@ -114,6 +114,7 @@ export class CrossServiceLink {
   };
 
   private handleCloseClick = () => {
+    this.options.events?.onCloseClick?.();
     this.unmount();
   };
 

@@ -20,7 +20,8 @@ A self-contained embeddable widget for cross-promoting trophy-related services. 
       const onLinkClick = (link) => console.log("link clicked", link);
       const onLearnMoreClick = () => console.log("learn more click");
       const onNeverShowClick = () => console.log("never show click");
-      const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
+      const onCloseClick = () => console.log("close click");
+      const events = { onLinkClick, onLearnMoreClick, onNeverShowClick, onCloseClick };
       const widget = new window.CrossServiceLink({ target: "#app", events });
       widget.mount();
     },

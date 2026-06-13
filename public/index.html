@@ -22,7 +22,8 @@
           const onLinkClick = (link) => console.log("link clicked", link);
           const onLearnMoreClick = () => console.log("learn more click");
           const onNeverShowClick = () => console.log("never show click");
-          const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
+          const onCloseClick = () => console.log("close click");
+          const events = { onLinkClick, onLearnMoreClick, onNeverShowClick, onCloseClick };
           const widget = new window.CrossServiceLink({
             target: "#app",
             events,
@@ -122,7 +123,8 @@
       const onLinkClick = (link) =&gt; console.log("link clicked", link);
       const onLearnMoreClick = () =&gt; console.log("learn more click");
       const onNeverShowClick = () =&gt; console.log("never show click");
-      const events = { onLinkClick, onLearnMoreClick, onNeverShowClick };
+      const onCloseClick = () =&gt; console.log("close click");
+      const events = { onLinkClick, onLearnMoreClick, onNeverShowClick, onCloseClick };
       const widget = new window.CrossServiceLink({ target: "#app", events });
       widget.mount();
     },
