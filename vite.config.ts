@@ -67,6 +67,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
     plugins: [html, dev, loader(env.VITE_BASE_URL)],
+    server: { port: 4173 },
     build: {
       lib: {
         entry: "src/main.ts",
