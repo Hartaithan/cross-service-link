@@ -87,7 +87,7 @@
   z-index: 50;
   width: 20rem;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border) !important;
   border-radius: var(--radius);
   background-color: var(--card);
   color: var(--card-foreground);
@@ -165,13 +165,19 @@ svg {
 }
 
 .csl-widget-item:hover {
-  background-color: color-mix(in oklab, var(--accent) 50%, black);
+  background-color: var(--secondary);
 }
 
-.csl-widget-item:hover .csl-widget-item-title,
-.csl-widget-item:hover .csl-widget-item-desc,
-.csl-widget-item:hover .csl-widget-item-arrow {
-  color: var(--foreground);
+:host(:not([data-theme])) {
+  .csl-widget-item:hover {
+    background-color: color-mix(in oklab, var(--accent) 50%, var(--background));
+  }
+
+  .csl-widget-item:hover .csl-widget-item-title,
+  .csl-widget-item:hover .csl-widget-item-desc,
+  .csl-widget-item:hover .csl-widget-item-arrow {
+    color: var(--foreground);
+  }
 }
 
 .csl-widget-item-text {
@@ -232,7 +238,7 @@ svg {
 }
 
 .csl-widget-explore:hover {
-  background-color: color-mix(in oklab, var(--primary) 90%, black);
+  background-color: color-mix(in oklab, var(--primary) 90%, var(--background));
 }
 
 .csl-widget-never {

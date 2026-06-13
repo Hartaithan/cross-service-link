@@ -91,8 +91,14 @@
 }
 
 .csl-modal-arrow:hover {
-  background-color: color-mix(in oklab, var(--accent) 80%, black);
-  color: var(--accent-foreground);
+  background-color: var(--secondary);
+}
+
+:host(:not([data-theme])) {
+  .csl-modal-arrow:hover {
+    background-color: color-mix(in oklab, var(--accent) 80%, var(--background));
+    color: var(--accent-foreground);
+  }
 }
 
 .csl-modal-arrow-left {
@@ -187,7 +193,7 @@
 }
 
 .csl-carousel-slide-link:hover {
-  background-color: color-mix(in oklab, var(--primary) 90%, black);
+  background-color: color-mix(in oklab, var(--primary) 90%, var(--background));
 }
 
 .csl-modal-tabs {
