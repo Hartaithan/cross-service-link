@@ -32,14 +32,12 @@ declare global {
     }
 
     interface Instance {
-      mount(onMounted?: () => void): Promise<void>;
-      unmount(): Promise<void>;
-      setTheme(theme: Theme): void;
+      mount: (onMounted?: () => void) => Promise<void>;
+      unmount: () => Promise<void>;
+      setTheme: (theme: Theme) => void;
     }
 
-    interface Constructor {
-      new (options: Options): Instance;
-    }
+    type Constructor = new (options: Options) => Instance;
   }
 
   interface Window {
