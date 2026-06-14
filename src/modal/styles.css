@@ -131,6 +131,8 @@
   padding-left: var(--slide-spacing);
   display: flex;
   flex-direction: column;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .csl-carousel-slide-image {
