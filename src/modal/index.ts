@@ -5,6 +5,7 @@ import { animateExit } from "../utils/animation";
 import { setupCarouselControls } from "../utils/carousel";
 import { createTemplate, EventManager, renderTemplate } from "../utils/dom";
 import { getImageURL } from "../utils/image";
+import { ScrollLock } from "../utils/scroll-lock";
 import slide from "./slide.html?raw";
 import css from "./styles.css?inline";
 import tab from "./tab.html?raw";
@@ -18,10 +19,12 @@ export class Modal {
   private filteredItems: typeof items = [];
   private events: CrossServiceLink.Events;
   private eventManager = new EventManager();
+  private scrollLock: ScrollLock | null = null;
 
-  constructor(root: ShadowRoot, events: CrossServiceLink.Events = {}) {
-    this.root = root;
-    this.events = events;
+  constructor(options: CrossServiceLink.ModalOptions) {
+    this.root = options.root;
+    this.events = options.events ?? {};
+    if (options.scrollLock !== false) this.scrollLock = new ScrollLock();
     console.info("[cross-service-link]: modal initialized");
   }
 
@@ -30,6 +33,7 @@ export class Modal {
     this.render();
     this.attachEvents();
     this.mounted = true;
+    this.scrollLock?.lock();
     if (initialIndex > 0) {
       requestAnimationFrame(() => {
         this.embla?.scrollTo(initialIndex);
@@ -49,6 +53,7 @@ export class Modal {
     }
     this.container.remove();
     this.mounted = false;
+    this.scrollLock?.unlock();
     console.info("[cross-service-link]: modal closed");
   }
 

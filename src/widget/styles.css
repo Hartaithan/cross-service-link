@@ -83,7 +83,7 @@
 :host {
   position: fixed;
   top: var(--host-spacing-y);
-  right: var(--host-spacing-x);
+  right: calc(var(--host-spacing-x) + var(--removed-body-scroll-bar-size, 0px));
   z-index: 50;
   width: 20rem;
   overflow: hidden;

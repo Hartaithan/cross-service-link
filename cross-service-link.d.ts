@@ -19,7 +19,13 @@ declare global {
 
     type Theme = "dark" | "light" | "inherit";
 
-    interface Options {
+    interface ModalOptions {
+      root: ShadowRoot;
+      events?: Events;
+      scrollLock?: boolean;
+    }
+
+    interface Options extends Pick<ModalOptions, "scrollLock"> {
       target: string | HTMLElement;
       events?: Events;
       theme?: Theme;

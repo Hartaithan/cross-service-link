@@ -46,7 +46,11 @@ export class CrossServiceLink {
     if (this.theme !== "inherit") this.host.dataset.theme = this.theme;
     target.appendChild(this.host);
     this.root = this.host.attachShadow({ mode: "open" });
-    this.modal = new Modal(this.root, this.options.events);
+    this.modal = new Modal({
+      root: this.root,
+      events: this.options.events,
+      scrollLock: this.options.scrollLock,
+    });
     this.render();
     this.attachEvents();
     this.mounted = true;
