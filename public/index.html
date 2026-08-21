@@ -23,7 +23,12 @@
           const onLearnMoreClick = () => console.log("learn more click");
           const onNeverShowClick = () => console.log("never show click");
           const onCloseClick = () => console.log("close click");
-          const events = { onLinkClick, onLearnMoreClick, onNeverShowClick, onCloseClick };
+          const events = {
+            onLinkClick,
+            onLearnMoreClick,
+            onNeverShowClick,
+            onCloseClick,
+          };
           const widget = new window.CrossServiceLink({
             target: "#app",
             events,
@@ -32,6 +37,34 @@
         },
         { once: true },
       );
+      // copy button functionality
+      document.addEventListener("DOMContentLoaded", () => {
+        const copyButton = document.getElementById("copy-button");
+        const copyIcon = document.getElementById("copy-icon");
+        const checkIcon = document.getElementById("check-icon");
+        if (copyButton) {
+          copyButton.addEventListener("click", async () => {
+            const codeBlock = document.querySelector(
+              ".code-block-wrapper code",
+            );
+            const codeText = codeBlock ? codeBlock.textContent : "";
+            try {
+              await navigator.clipboard.writeText(codeText);
+              // switch to check icon
+              copyIcon.style.display = "none";
+              checkIcon.style.display = "block";
+              // switch back after 3 seconds
+              const timeout = setTimeout(() => {
+                copyIcon.style.display = "block";
+                checkIcon.style.display = "none";
+                clearTimeout(timeout);
+              }, 3000);
+            } catch (error) {
+              console.error("failed to copy", error);
+            }
+          });
+        }
+      });
     </script>
     <style>
       * {
@@ -77,6 +110,33 @@
       pre > code {
         font-size: 0.75rem;
       }
+      .code-block-wrapper {
+        position: relative;
+      }
+      .copy-button {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: #2a2a2a;
+        border: 1px solid #3a3a3a;
+        border-radius: 0.375rem;
+        padding: 0.5rem;
+        cursor: pointer;
+        color: #d4d4d4;
+        transition: background 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+      }
+      .copy-button:hover {
+        background: #3a3a3a;
+      }
+      .copy-button svg {
+        width: 1rem;
+        height: 1rem;
+      }
     </style>
   </head>
   <body id="app">
@@ -113,9 +173,38 @@
       </section>
       <section>
         <h3>Usage</h3>
-        <pre
-          style="margin-top: 1rem"
-        ><code>&lt;script src="loader.js" defer&gt;&lt;/script&gt;
+        <div class="code-block-wrapper" style="margin-top: 1rem">
+          <button class="copy-button" id="copy-button" aria-label="Copy code">
+            <svg
+              id="copy-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path
+                d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+              ></path>
+            </svg>
+            <svg
+              id="check-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="display: none"
+            >
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <pre><code>&lt;script src="loader.js" defer&gt;&lt;/script&gt;
 &lt;script&gt;
   document.addEventListener(
     "cross-service-link:ready",
@@ -131,6 +220,7 @@
     { once: true },
   );
 &lt;/script&gt;</code></pre>
+        </div>
       </section>
     </main>
   </body>
